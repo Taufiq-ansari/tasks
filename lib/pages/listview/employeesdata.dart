@@ -98,11 +98,12 @@ class _EmployeesWidgetState extends State<EmployeesWidget> {
           onPressed: () {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                backgroundColor: isdark ? Colors.black54 : Colors.white54,
+                backgroundColor: isdark ? Colors.black12 : Colors.white12,
                 content: Text(
                   "currently not working yet",
                   style: TextStyle(
-                      color: isdark ? Colors.white54 : Colors.black54),
+                    color: isdark ? Colors.white54 : Colors.black54,
+                  ),
                 ),
               ),
             );
@@ -132,13 +133,15 @@ class _EmployeesWidgetState extends State<EmployeesWidget> {
                         : Themes.darktheme.primaryColor,
                   )
                 : Icon(
-                    Icons.list,
+                    Icons.more_vert_outlined,
                     color: isdark
                         ? Themes.lightheme.primaryColor
                         : Themes.darktheme.primaryColor,
                   ),
           ),
           Switch(
+            splashRadius: 3,
+            padding: EdgeInsets.all(10),
             activeColor: isdark
                 ? Themes.lightheme.primaryColor
                 : Themes.darktheme.primaryColor,
@@ -233,6 +236,13 @@ class _EmployeesWidgetState extends State<EmployeesWidget> {
               },
               physics: BouncingScrollPhysics(),
             ),
+      // drawer: Drawer(
+      //   shadowColor: Themes.darktheme.primaryColor,
+      //   child: Column(
+      //     children: [],
+      //   ),
+      //   backgroundColor: Colors.white12,
+      // ),
     );
   }
 }
