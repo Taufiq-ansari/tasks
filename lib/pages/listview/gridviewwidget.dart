@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
 class GridViewWidget extends StatelessWidget {
@@ -9,7 +11,7 @@ class GridViewWidget extends StatelessWidget {
     "mango",
     "cherry",
     "kivy",
-    "orange"
+    "orange",
   ];
   @override
   Widget build(BuildContext context) {

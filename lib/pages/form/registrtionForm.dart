@@ -26,7 +26,10 @@ class _FormRegistrationState extends State<FormRegistration> {
         title: Text(
           'Registration',
           style: TextStyle(
-              color: Colors.brown[200], fontFamily: "MyFonts", fontSize: 32),
+            color: Colors.brown[200],
+            fontFamily: "MyFonts",
+            fontSize: 32,
+          ),
         ),
       ),
       body: Padding(
@@ -45,22 +48,23 @@ class _FormRegistrationState extends State<FormRegistration> {
                   ),
                 ),
                 TextFormField(
-                    controller: fullnameController,
-                    onSaved: (String? newvalue) {
-                      u_name = fullnameController.text;
-                    },
-                    decoration: InputDecoration(
-                      hintText: "Enter Full-Name",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (fullnameController == null ||
-                          fullnameController.text.isEmpty) {
-                        return "Please enter your fullname";
-                      }
-                      return null;
-                    }),
+                  controller: fullnameController,
+                  onSaved: (String? newvalue) {
+                    u_name = fullnameController.text;
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Enter Full-Name",
+                    hintStyle: TextStyle(color: Colors.grey),
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (fullnameController == null ||
+                        fullnameController.text.isEmpty) {
+                      return "Please enter your fullname";
+                    }
+                    return null;
+                  },
+                ),
 
                 SizedBox(
                   height: 10.0,
@@ -73,9 +77,10 @@ class _FormRegistrationState extends State<FormRegistration> {
                 ),
                 TextFormField(
                   decoration: InputDecoration(
-                      hintStyle: TextStyle(color: Colors.grey),
-                      hintText: "Age",
-                      border: OutlineInputBorder()),
+                    hintStyle: TextStyle(color: Colors.grey),
+                    hintText: "Age",
+                    border: OutlineInputBorder(),
+                  ),
                 ),
                 SizedBox(
                   height: 10.0,
@@ -99,15 +104,16 @@ class _FormRegistrationState extends State<FormRegistration> {
                     ),
                     Text("male"),
                     Radio(
-                        value: "female",
-                        groupValue: gender,
-                        onChanged: (String? val) {
-                          gender = val!;
-                          setState(() {
-                            print(" female : $val");
-                          });
-                        }),
-                    Text("female")
+                      value: "female",
+                      groupValue: gender,
+                      onChanged: (String? val) {
+                        gender = val!;
+                        setState(() {
+                          print(" female : $val");
+                        });
+                      },
+                    ),
+                    Text("female"),
                   ],
                 ),
                 Text(
@@ -132,14 +138,18 @@ class _FormRegistrationState extends State<FormRegistration> {
                       child: TextField(
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                            suffix: Text("ft"), border: OutlineInputBorder()),
+                          suffix: Text("ft"),
+                          border: OutlineInputBorder(),
+                        ),
                       ),
                     ),
                     Expanded(
                       child: TextField(
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                            suffix: Text("kg"), border: OutlineInputBorder()),
+                          suffix: Text("kg"),
+                          border: OutlineInputBorder(),
+                        ),
                       ),
                     ),
                   ],
@@ -172,19 +182,20 @@ class _FormRegistrationState extends State<FormRegistration> {
                 ),
                 Text("Email Id"),
                 TextFormField(
-                    controller: mailController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                    ),
-                    onSaved: (Value) {
-                      u_mail = mailController.text;
-                    },
-                    validator: (value) {
-                      if (value!.isEmpty || value == null) {
-                        return " email required";
-                      }
-                      return null;
-                    }),
+                  controller: mailController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  onSaved: (Value) {
+                    u_mail = mailController.text;
+                  },
+                  validator: (value) {
+                    if (value!.isEmpty || value == null) {
+                      return " email required";
+                    }
+                    return null;
+                  },
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -214,8 +225,9 @@ class _FormRegistrationState extends State<FormRegistration> {
                     ),
                     ElevatedButton(
                       style: ButtonStyle(
-                          backgroundColor:
-                              WidgetStatePropertyAll<Color>(Colors.grey)),
+                        backgroundColor:
+                            WidgetStatePropertyAll<Color>(Colors.grey),
+                      ),
                       onPressed: () {
                         fullnameController.clear;
                         _formKey.currentState!.reset();
@@ -231,7 +243,7 @@ class _FormRegistrationState extends State<FormRegistration> {
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),

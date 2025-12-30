@@ -1,5 +1,4 @@
 import 'package:api/pages/navigation/home.dart';
-import 'package:api/pages/navigation/feed_screen.dart';
 import 'package:flutter/material.dart';
 
 class RouterFile {
