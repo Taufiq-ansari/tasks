@@ -1,7 +1,6 @@
+import 'package:api/pages/listview/splashscreen.dart';
 import 'package:api/pages/navigation/feed_screen.dart';
-import 'package:api/typesofbutton/checkbox.dart';
-import 'package:api/typesofbutton/popupmenubtn.dart';
-import 'package:api/typesofbutton/task_dropdown.dart';
+import 'package:api/pages/themechange.dart/themeclass.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,24 +8,21 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
+      theme: Themes.lightheme,
+      darkTheme: Themes.darktheme,
 
-          // textTheme: GoogleFonts().,
-          ),
-      // home: HomeScreen(),
-      // initialRoute: "/",
-
+      themeMode: ThemeMode.dark,
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':
             return MaterialPageRoute(
-              builder: (context) => DropDownTask(),
+              builder: (context) => SplashScreen(),
             );
           case '/feed':
             var arg = settings.arguments as Object; //data pass with ongenerated
@@ -39,6 +35,7 @@ class MyApp extends StatelessWidget {
           //  default :
           //  MaterialPageRoute(builder: (context) => Page404(),);
         }
+        return null;
       },
 
       // routes: {
