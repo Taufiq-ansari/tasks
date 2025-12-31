@@ -243,6 +243,23 @@ class _EmployeesWidgetState extends State<EmployeesWidget> {
       //   ),
       //   backgroundColor: Colors.white12,
       // ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Themes.lightheme.primaryColor,
+        onPressed: () {
+          print("pressed");
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                "currently not working!",
+              ),
+            ),
+          );
+        },
+        child: Icon(
+          Icons.ios_share_rounded,
+          color: Colors.grey,
+        ),
+      ),
     );
   }
 }

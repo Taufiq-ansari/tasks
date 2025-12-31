@@ -1,4 +1,6 @@
+import 'package:api/pages/themechange.dart/themeclass.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UrlLauncherScreen extends StatefulWidget {
@@ -27,11 +29,19 @@ class _UrlLauncherScreenState extends State<UrlLauncherScreen> {
                 ),
               ),
               onPressed: () async {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text("Error: No activity found to handle intent"),
-                  ),
-                );
+                String mail =
+                    "mailto:taufiqansari145@gmail.com?subject=Sample&body=TestMessage";
+
+                final uri = Uri.parse(mail);
+                await canLaunchUrl(uri)
+                    ? launchUrl(uri)
+                    : print("not mail found");
+
+                // ScaffoldMessenger.of(context).showSnackBar(
+                //   SnackBar(
+                //     content: Text("Error: No activity found to handle intent"),
+                //   ),
+                // );
               },
               child: Icon(
                 Icons.mail,
@@ -89,6 +99,26 @@ class _UrlLauncherScreenState extends State<UrlLauncherScreen> {
               ),
             ),
           ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Themes.lightheme.primaryColor,
+        onPressed: () async {
+          print("pressed");
+
+          await Share.share("https://flutter-tutorial.net/");
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                "currently not working",
+              ),
+            ),
+          );
+        },
+        child: Icon(
+          Icons.ios_share_outlined,
+          color: Colors.white60,
         ),
       ),
     );
