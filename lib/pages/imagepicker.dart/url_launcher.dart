@@ -1,6 +1,6 @@
 import 'package:api/pages/themechange.dart/themeclass.dart';
 import 'package:flutter/material.dart';
-import 'package:share_plus/share_plus.dart';
+// import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UrlLauncherScreen extends StatefulWidget {
@@ -106,13 +106,13 @@ class _UrlLauncherScreenState extends State<UrlLauncherScreen> {
         onPressed: () async {
           print("pressed");
 
-          await SharePlus.instance.share(
-            ShareParams(
-              title: "website",
-              subject: "flutter",
-              uri: Uri.parse("https://flutter-tutorial.net/"),
-            ),
-          );
+          // await SharePlus.instance.share(
+          //   ShareParams(
+          //     title: "website",
+          //     subject: "flutter",
+          //     uri: Uri.parse("https://flutter-tutorial.net/"),
+          //   ),
+          // );
 
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
