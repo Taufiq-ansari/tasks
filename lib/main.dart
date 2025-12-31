@@ -1,8 +1,7 @@
-import 'package:api/pages/listview/splashscreen.dart';
+import 'package:api/pages/imagepicker.dart/share.dart';
 import 'package:api/pages/navigation/feed_screen.dart';
 import 'package:api/pages/themechange.dart/themeclass.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 void main() {
   // WidgetsFlutterBinding.ensureInitialized();
@@ -20,12 +19,13 @@ class MyApp extends StatelessWidget {
       theme: Themes.lightheme,
       darkTheme: Themes.darktheme,
 
-      themeMode: ThemeMode.dark,
+// theme mode change directly from here...
+      themeMode: ThemeMode.light,
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':
             return MaterialPageRoute(
-              builder: (context) => SplashScreen(),
+              builder: (context) => ShareContentScreen(),
             );
           case '/feed':
             var arg = settings.arguments as Object; //data pass with ongenerated
