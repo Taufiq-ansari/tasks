@@ -26,7 +26,9 @@ class _SliderWidgetState extends State<SliderWidget> {
               label: "$minvValue",
               onChanged: (selected) {
                 minvValue = selected;
-                setState(() {});
+                setState(() {
+                  
+                });
               },
             ),
           ),
