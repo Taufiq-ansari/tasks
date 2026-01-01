@@ -17,8 +17,18 @@ class _DiceRollScreenState extends State<DiceRollScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back),
-        title: Text("DICE-ROLL"),
+        leading: Icon(
+          Icons.arrow_back,
+          fontWeight: FontWeight.bold,
+        ),
+        title: Text(
+          "DICE-ROLL",
+          style: TextStyle(
+            color: Colors.blueAccent,
+            fontFamily: "MyFonts",
+            fontWeight: FontWeight.w800,
+          ),
+        ),
       ),
       backgroundColor: Colors.amber[100],
       body: Column(
@@ -96,16 +106,6 @@ class _DiceRollScreenState extends State<DiceRollScreen> {
                 ),
               ),
             ],
-          ),
-          ElevatedButton(
-            onPressed: () {
-              dice1 = Random().nextInt(6) + 1;
-              dice2 = Random().nextInt(6) + 1;
-
-              print("total of 2 dices: ${dice1 + dice2}");
-              setState(() {});
-            },
-            child: Text("roll"),
           ),
         ],
       ),
