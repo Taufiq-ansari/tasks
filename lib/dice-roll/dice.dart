@@ -38,10 +38,21 @@ class _DiceRollScreenState extends State<DiceRollScreen> {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: Center(
-                  child: Text(
-                    "$dice1",
-                    style: TextStyle(fontSize: 40.0, color: Colors.white),
-                  ),
+                  child: (dice1 == 1)
+                      ? Image.asset("assets/diceImage/dice1.png")
+                      : (dice1 == 2)
+                          ? Image.asset("assets/diceImage/dice2.png")
+                          : (dice1 == 3)
+                              ? Image.asset("assets/diceImage/dice3.png")
+                              : (dice1 == 4)
+                                  ? Image.asset("assets/diceImage/dice4.png")
+                                  : (dice1 == 5)
+                                      ? Image.asset(
+                                          "assets/diceImage/dice5.png",
+                                        )
+                                      : Image.asset(
+                                          "assets/diceImage/dice6.png",
+                                        ),
                 ),
               ),
               Container(
@@ -53,13 +64,21 @@ class _DiceRollScreenState extends State<DiceRollScreen> {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: Center(
-                  child: Text(
-                    "$dice2",
-                    style: TextStyle(
-                      fontSize: 40.0,
-                      color: const Color.fromARGB(255, 141, 127, 127),
-                    ),
-                  ),
+                  child: (dice2 == 1)
+                      ? Image.asset("assets/diceImage/dice1.png")
+                      : (dice2 == 2)
+                          ? Image.asset("assets/diceImage/dice2.png")
+                          : (dice2 == 3)
+                              ? Image.asset("assets/diceImage/dice3.png")
+                              : (dice2 == 4)
+                                  ? Image.asset("assets/diceImage/dice4.png")
+                                  : (dice2 == 5)
+                                      ? Image.asset(
+                                          "assets/diceImage/dice5.png",
+                                        )
+                                      : Image.asset(
+                                          "assets/diceImage/dice6.png",
+                                        ),
                 ),
               ),
             ],

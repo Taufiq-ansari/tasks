@@ -1,4 +1,5 @@
 import 'package:api/dice-roll/dice.dart';
+import 'package:api/emi_calculator/calculator.dart';
 import 'package:api/pages/navigation/feed_screen.dart';
 import 'package:api/pages/themechange.dart/themeclass.dart';
 import 'package:flutter/material.dart';
