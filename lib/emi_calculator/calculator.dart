@@ -19,11 +19,6 @@ class _EmiCalculatorState extends State<EmiCalculator> {
 // loanTenure
   int year = 5;
   int? remaning;
-  calculate(double principal, double rates, int tenure) {
-    double monthly = (rates / 12) / 100;
-
-    double totalt = tenure * 12;
-  }
 
   @override
   Widget build(BuildContext context) {
