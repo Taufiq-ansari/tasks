@@ -31,7 +31,9 @@ class androidFolderWidget extends StatelessWidget {
                     TextSpan(
                       children: [
                         TextSpan(
-                          style: TextStyle(color: Colors.grey),
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
                           text: "4 items | 28/01/20 11:08 PM",
                         ),
                       ],

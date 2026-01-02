@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class EmiCalculator extends StatefulWidget {
@@ -229,6 +231,26 @@ class _EmiCalculatorState extends State<EmiCalculator> {
                             // remaning = interestRate.toInt();
 
                             // [P x R x (1+R) ^N]/ [(1+R) ^ (N-1)]
+
+                            double monthlyRate = (rate / 12) / 100;
+
+                            int tenure = year * 12;
+
+                            double interestRate = loanAmount *
+                                monthlyRate *
+                                (1 + monthlyRate) *
+                                pow((1 + monthlyRate), tenure) /
+                                (pow((1 + monthlyRate), tenure - 1));
+
+                            remaning = interestRate.toInt();
+
+                            // double interestRate = loanAmount *
+                            //     monthlyRate *
+                            //     (1 +monthlyRate) *
+                            //     pow(year, 1) /
+                            //     (1 +monthlyRate) *
+                            //     pow(1,monthlyRate)-1);
+                            // remaning = interestRate.toInt();
 
                             print(
                               " calculate of EMI ${remaning} ",

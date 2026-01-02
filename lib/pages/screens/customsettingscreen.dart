@@ -346,7 +346,7 @@ class CustomSettingScreen extends StatelessWidget {
               height: 20.0,
               thickness: 0.2,
             ),
-//more...
+            //more...
             Padding(
               padding: const EdgeInsets.only(
                 left: 20.0,

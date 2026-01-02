@@ -1,5 +1,6 @@
-import 'package:api/dice-roll/dice.dart';
+import 'package:api/datapass.dart/datapasswidget.dart';
 import 'package:api/pages/navigation/feed_screen.dart';
+import 'package:api/pages/screens/filegridview.dart';
 import 'package:api/pages/themechange.dart/themeclass.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: Themes.lightheme,
+      theme: ThemeData(
+          // font set....
+          // fontFamily: "MyFonts",
+          ),
+
       darkTheme: Themes.darktheme,
 
 // theme mode change directly from here...
@@ -25,7 +30,7 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case '/':
             return MaterialPageRoute(
-              builder: (context) => DiceRollScreen(),
+              builder: (context) => FileGRidViewScreen(),
             );
           case '/feed':
             var arg = settings.arguments as Object; //data pass with ongenerated
