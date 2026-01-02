@@ -12,7 +12,7 @@ class _DataReceiveState extends State<DataReceive> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Data Receive"),
+        title: Text("Data Receive "),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -23,7 +23,10 @@ class _DataReceiveState extends State<DataReceive> {
             ),
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context, "hello its time over");
+              setState(() {});
+            },
             child: Text("return"),
           ),
         ],

@@ -59,14 +59,17 @@ class _DataPassScreenState extends State<DataPassScreen> {
           ),
           ElevatedButton(
             onPressed: () {
-              setState(() {
-                Navigator.push(
+              setState(() async {
+                final retrive = await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        DataReceive(receivedData: changeValue),
+                    builder: (context) => DataReceive(
+                      receivedData: changeValue,
+                    ),
                   ),
                 );
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(retrive)));
               });
             },
             child: Text(
