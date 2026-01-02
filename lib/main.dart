@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case '/':
             return MaterialPageRoute(
-              builder: (context) => FileGRidViewScreen(),
+              builder: (context) => DataPassScreen(),
             );
           case '/feed':
             var arg = settings.arguments as Object; //data pass with ongenerated
