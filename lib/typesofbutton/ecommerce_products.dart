@@ -15,23 +15,26 @@ class _DisplayEcommerceProductsState extends State<DisplayEcommerceProducts> {
 // list of product display
   List<ProductsModel> allProducts = [
     ProductsModel(
-        imageUrl:
-            "https://images-cdn.ubuy.co.in/6701d3c803d7f318d659fafc-mini-phone-4g-unlocked-small-smartphone.jpg",
-        productName: "smartphone",
-        price: 69000,
-        quantity: 2),
+      imageUrl:
+          "https://images-cdn.ubuy.co.in/6701d3c803d7f318d659fafc-mini-phone-4g-unlocked-small-smartphone.jpg",
+      productName: "smartphone",
+      price: 69000,
+      quantity: 2,
+    ),
     ProductsModel(
-        imageUrl:
-            "https://images.pexels.com/photos/40185/mac-freelancer-macintosh-macbook-40185.jpeg?cs=srgb&dl=pexels-pixabay-40185.jpg&fm=jpg",
-        productName: "laptop",
-        price: 120000,
-        quantity: 1),
+      imageUrl:
+          "https://images.pexels.com/photos/40185/mac-freelancer-macintosh-macbook-40185.jpeg?cs=srgb&dl=pexels-pixabay-40185.jpg&fm=jpg",
+      productName: "laptop",
+      price: 120000,
+      quantity: 1,
+    ),
     ProductsModel(
-        imageUrl:
-            "https://rukminim2.flixcart.com/image/480/640/xif0q/smart-band-tag/q/s/2/amoled-no-regular-14-0-yes-yes-xmsh15hm-android-ios-mi-yes-original-imahdq5gx7kxjz4b.jpeg?q=90",
-        productName: "smart-band",
-        price: 14000,
-        quantity: 5),
+      imageUrl:
+          "https://rukminim2.flixcart.com/image/480/640/xif0q/smart-band-tag/q/s/2/amoled-no-regular-14-0-yes-yes-xmsh15hm-android-ios-mi-yes-original-imahdq5gx7kxjz4b.jpeg?q=90",
+      productName: "smart-band",
+      price: 14000,
+      quantity: 5,
+    ),
   ];
 
 //  late   List<ProductsModel> filterlist = allProducts.where((item) => item.quantity > 1).toList();
@@ -69,52 +72,55 @@ class _DisplayEcommerceProductsState extends State<DisplayEcommerceProducts> {
         children: [
           // slider
           Slider(
-              label: allProducts[2].quantity.toString(),
-              value: isQuality,
-              min: 0.0,
-              max: 1.0,
-              onChanged: (double selected) {
-                isQuality = selected;
-                setState(() {});
-              }),
+            label: allProducts[2].quantity.toString(),
+            value: isQuality,
+            min: 0.0,
+            max: 1.0,
+            onChanged: (double selected) {
+              isQuality = selected;
+              setState(() {});
+            },
+          ),
           Expanded(
             child: ListView.builder(
-                itemCount: allProducts.length,
-                itemBuilder: (context, index) {
-                  final product = allProducts[index];
-                  return ProductsListTile(products: product);
-                }),
+              itemCount: allProducts.length,
+              itemBuilder: (context, index) {
+                final product = allProducts[index];
+                return ProductsListTile(products: product);
+              },
+            ),
           ),
           ElevatedButton(
             onPressed: () {
               showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      content: Text("alertbox"),
-                      title: Text(
-                        "are you sure you want to exit ",
-                        style: TextStyle(fontFamily: "MyFonts", fontSize: 14),
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    content: Text("alertbox"),
+                    title: Text(
+                      "are you sure you want to exit ",
+                      style: TextStyle(fontFamily: "MyFonts", fontSize: 14),
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("Yes"),
                       ),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text("Yes"),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text("No"),
-                        ),
-                      ],
-                    );
-                  });
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("No"),
+                      ),
+                    ],
+                  );
+                },
+              );
             },
             child: Text("content"),
-          )
+          ),
         ],
       ),
     );

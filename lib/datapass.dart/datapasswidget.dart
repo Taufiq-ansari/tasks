@@ -11,6 +11,8 @@ class DataPassScreen extends StatefulWidget {
 class _DataPassScreenState extends State<DataPassScreen> {
   TextEditingController userInputController = TextEditingController();
 
+// datapass  one screen to another
+// Retrive the data from second screen
 // store value
   String changeValue = "";
 
@@ -48,28 +50,24 @@ class _DataPassScreenState extends State<DataPassScreen> {
                   ),
                 ),
               ),
-              onChanged: (value) {
-                setState(() {
-                  changeValue = value;
-
-                  print(changeValue);
-                });
-              },
             ),
           ),
           ElevatedButton(
-            onPressed: () {
-              setState(() async {
-                final retrive = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DataReceive(
-                      receivedData: changeValue,
-                    ),
+            onPressed: () async {
+              String retrive = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DataReceive(
+                    receivedData: userInputController.text,
                   ),
-                );
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text(retrive)));
+                ),
+              );
+
+              changeValue = retrive;
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(retrive)));
+              setState(() {
+                userInputController.clear();
               });
             },
             child: Text(

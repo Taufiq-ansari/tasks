@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-class DataReceive extends StatefulWidget {
+class DataReceive extends StatelessWidget {
   DataReceive({required this.receivedData});
-  final String receivedData;
-  @override
-  State<DataReceive> createState() => _DataReceiveState();
-}
 
-class _DataReceiveState extends State<DataReceive> {
+//
+//
+
+  final String receivedData;
+  //
+
+  //
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,13 +21,14 @@ class _DataReceiveState extends State<DataReceive> {
         children: [
           Center(
             child: Text(
-              "Data Receive: ${widget.receivedData}",
+              "Data Receive: $receivedData",
             ),
           ),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context, "hello its time over");
-              setState(() {});
+
+              print('return button working');
             },
             child: Text("return"),
           ),
