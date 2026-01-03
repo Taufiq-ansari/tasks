@@ -1,3 +1,4 @@
+import 'package:api/bmi/bmi_calculator.dart';
 import 'package:api/calculator/calculator.dart';
 import 'package:api/datapass.dart/datapasswidget.dart';
 import 'package:api/pages/navigation/feed_screen.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case '/':
             return MaterialPageRoute(
-              builder: (context) => CalculatorScreen(),
+              builder: (context) => BmiCalculatorScreen(),
             );
           case '/feed':
             var arg = settings.arguments as Object; //data pass with ongenerated
