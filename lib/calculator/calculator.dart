@@ -1,4 +1,5 @@
 import 'package:api/calculator/customButton.dart';
+import 'package:api/pages/themechange.dart/themeclass.dart';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
 
@@ -12,18 +13,29 @@ class CalculatorScreen extends StatefulWidget {
 class _CalculatorScreenState extends State<CalculatorScreen> {
   // userinput
   String input = "";
-  // this variable for total
+  // this variable for total calculation
   String answer = "";
 
+  bool isDark = true;
+
+//  when user click on euqal button
   onEqual() {
     String userinput = input.replaceAll("x", "*");
     Parser perser = Parser();
     Expression expression = perser.parse(userinput);
     ContextModel contextmodel = ContextModel();
     double eval = expression.evaluate(EvaluationType.REAL, contextmodel);
-    answer = eval.toString();
+    answer = eval.toInt().toString();
+//  show  output in terminal
+    print(answer);
+  }
 
-    print(eval);
+// making fuctions for a operator
+  bool isOperatorAdded() {
+    if (input.isEmpty) {
+      return false;
+    }
+    return !RegExp(r'[/+\-x]$').hasMatch(input);
   }
 
   @override
@@ -34,29 +46,31 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 250.0),
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: '$input\n  $answer',
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    "$input",
+                    style: TextStyle(fontFamily: "MyFonts", fontSize: 20),
+                  ),
+                  Text(
+                    "$answer",
+                    style: TextStyle(
+                      fontSize: 40,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             Divider(
-              indent: 20.0,
-              endIndent: 20.0,
+              indent: 10.0,
+              endIndent: 10.0,
             ),
             Expanded(
               child: Column(
-                spacing: 30,
+                spacing: 20,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   // total calculated number displayed
@@ -68,29 +82,40 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                         onpressed: () {
                           input = "";
                           answer = "";
+
                           setState(() {
                             print("c pressed");
                           });
                         },
                         labelText: "C",
-                        textColor: Colors.black,
+                        textColor: isDark
+                            ? Themes.darktheme.primaryColor
+                            : Colors.black,
                       ),
                       CustomTextButton(
                         onpressed: () {},
                         labelText: "+/-",
-                        textColor: Colors.black,
+                        textColor: isDark
+                            ? Themes.darktheme.primaryColor
+                            : Colors.black,
                       ),
                       CustomTextButton(
                         onpressed: () {
-                          input += "%";
+                          if (isOperatorAdded()) {
+                            input += "%";
+                          }
                           setState(() {});
                         },
                         labelText: "%",
-                        textColor: Colors.black,
+                        textColor: isDark
+                            ? Themes.darktheme.primaryColor
+                            : Colors.black,
                       ),
                       CustomTextButton(
                         onpressed: () {
-                          input += "/";
+                          if (isOperatorAdded()) {
+                            input += "/";
+                          }
                           setState(() {});
                         },
                         labelText: "/",
@@ -108,7 +133,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           setState(() {});
                         },
                         labelText: "7",
-                        textColor: Colors.black,
+                        textColor: isDark
+                            ? Themes.darktheme.primaryColor
+                            : Colors.black,
                       ),
                       CustomTextButton(
                         onpressed: () {
@@ -116,7 +143,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           setState(() {});
                         },
                         labelText: "8",
-                        textColor: Colors.black,
+                        textColor: isDark
+                            ? Themes.darktheme.primaryColor
+                            : Colors.black,
                       ),
                       CustomTextButton(
                         onpressed: () {
@@ -124,11 +153,16 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           setState(() {});
                         },
                         labelText: "9",
-                        textColor: Colors.black,
+                        textColor: isDark
+                            ? Themes.darktheme.primaryColor
+                            : Colors.black,
                       ),
                       CustomTextButton(
                         onpressed: () {
-                          input += "x";
+                          if (isOperatorAdded()) {
+                            input += "x";
+                          }
+                          !RegExp(r'[/+\-x]$').hasMatch(input);
                           setState(() {});
                         },
                         labelText: "x",
@@ -145,7 +179,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           setState(() {});
                         },
                         labelText: "4",
-                        textColor: Colors.black,
+                        textColor: isDark
+                            ? Themes.darktheme.primaryColor
+                            : Colors.black,
                       ),
                       CustomTextButton(
                         onpressed: () {
@@ -153,7 +189,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           setState(() {});
                         },
                         labelText: "5",
-                        textColor: Colors.black,
+                        textColor: isDark
+                            ? Themes.darktheme.primaryColor
+                            : Colors.black,
                       ),
                       CustomTextButton(
                         onpressed: () {
@@ -161,10 +199,17 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           setState(() {});
                         },
                         labelText: "6",
-                        textColor: Colors.black,
+                        textColor: isDark
+                            ? Themes.darktheme.primaryColor
+                            : Colors.black,
                       ),
                       CustomTextButton(
-                        onpressed: () {},
+                        onpressed: () {
+                          if (isOperatorAdded()) {
+                            input += "-";
+                          }
+                          setState(() {});
+                        },
                         labelText: "-",
                         textColor: Colors.redAccent,
                       ),
@@ -179,7 +224,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           setState(() {});
                         },
                         labelText: "1",
-                        textColor: Colors.black,
+                        textColor: isDark
+                            ? Themes.darktheme.primaryColor
+                            : Colors.black,
                       ),
                       CustomTextButton(
                         onpressed: () {
@@ -187,7 +234,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           setState(() {});
                         },
                         labelText: "2",
-                        textColor: Colors.black,
+                        textColor: isDark
+                            ? Themes.darktheme.primaryColor
+                            : Colors.black,
                       ),
                       CustomTextButton(
                         onpressed: () {
@@ -195,11 +244,15 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           setState(() {});
                         },
                         labelText: "3",
-                        textColor: Colors.black,
+                        textColor: isDark
+                            ? Themes.darktheme.primaryColor
+                            : Colors.black,
                       ),
                       CustomTextButton(
                         onpressed: () {
-                          input += "+";
+                          if (isOperatorAdded()) {
+                            input += "+";
+                          }
 
                           setState(() {});
                         },
@@ -217,7 +270,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           setState(() {});
                         },
                         labelText: "00",
-                        textColor: Colors.black,
+                        textColor: isDark
+                            ? Themes.darktheme.primaryColor
+                            : Colors.black,
                       ),
                       CustomTextButton(
                         onpressed: () {
@@ -225,7 +280,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           setState(() {});
                         },
                         labelText: "0",
-                        textColor: Colors.black,
+                        textColor: isDark
+                            ? Themes.darktheme.primaryColor
+                            : Colors.black,
                       ),
                       CustomTextButton(
                         onpressed: () {
@@ -233,7 +290,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           setState(() {});
                         },
                         labelText: ".",
-                        textColor: Colors.black,
+                        textColor: isDark
+                            ? Themes.darktheme.primaryColor
+                            : Colors.black,
                       ),
                       CustomTextButton(
                         onpressed: () {

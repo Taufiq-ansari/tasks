@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       darkTheme: Themes.darktheme,
 
 // theme mode change directly from here...
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':

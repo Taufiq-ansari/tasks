@@ -9,6 +9,6 @@ class Themes {
 // dark theme
   static ThemeData darktheme = ThemeData(
     brightness: Brightness.dark,
-    primaryColor: const Color.fromARGB(255, 55, 52, 52),
+    primaryColor: const Color.fromARGB(255, 122, 118, 118),
   );
 }
