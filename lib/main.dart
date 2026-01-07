@@ -1,5 +1,4 @@
-import 'package:api/bmi/bmi_calculator.dart';
-import 'package:api/calculator/calculator.dart';
+import 'package:api/6-jan/splashscreen3.dart';
 import 'package:api/pages/navigation/feed_screen.dart';
 import 'package:api/pages/themechange.dart/themeclass.dart';
 import 'package:flutter/material.dart';
@@ -17,20 +16,28 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          // font set....
-          // fontFamily: "MyFonts",
-          ),
+      //  theme manage from here ....
+      theme: Theme.of(context).copyWith(
+        //  change  text-theme
+        textTheme: TextTheme(
+          bodyLarge: TextStyle(fontSize: 20),
+        ),
+      ),
+      // ThemeData(
+      //   textTheme: TextTheme(displayMedium: TextStyle(fontSize: 60)),
+      //   //  fontfamily change  in whole app
+      //   fontFamily: "MyFonts",
+      // ),
 
       darkTheme: Themes.darktheme,
 
 // theme mode change directly from here...
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.light,
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':
             return MaterialPageRoute(
-              builder: (context) => CalculatorScreen(),
+              builder: (context) => SplashScreen3(),
             );
           case '/feed':
             var arg = settings.arguments as Object; //data pass with ongenerated

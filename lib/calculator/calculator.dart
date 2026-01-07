@@ -1,5 +1,6 @@
 import 'package:api/calculator/customButton.dart';
 import 'package:api/pages/themechange.dart/themeclass.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
 
@@ -35,7 +36,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     if (input.isEmpty) {
       return false;
     }
-    return !RegExp(r'[/+\-x]$').hasMatch(input);
+    return !RegExp(r'[./+\-x]$').hasMatch(input);
   }
 
   @override
@@ -93,7 +94,12 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                             : Colors.black,
                       ),
                       CustomTextButton(
-                        onpressed: () {},
+                        onpressed: () {
+                          if (input == "+/-") {
+                            input += "(-";
+                          }
+                          setState(() {});
+                        },
                         labelText: "+/-",
                         textColor: isDark
                             ? Themes.darktheme.primaryColor
@@ -286,7 +292,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       ),
                       CustomTextButton(
                         onpressed: () {
-                          input = ".";
+                          if (isOperatorAdded()) {
+                            input += ".";
+                          }
                           setState(() {});
                         },
                         labelText: ".",
