@@ -1,3 +1,4 @@
+import 'package:api/23_jan/tabbarview/tabbarviewpage.dart';
 import 'package:api/6-jan/splashscreen3.dart';
 import 'package:api/pages/navigation/feed_screen.dart';
 import 'package:api/pages/themechange.dart/themeclass.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case '/':
             return MaterialPageRoute(
-              builder: (context) => SplashScreen3(),
+              builder: (context) => MyTabbarViewPage(),
             );
           case '/feed':
             var arg = settings.arguments as Object; //data pass with ongenerated
