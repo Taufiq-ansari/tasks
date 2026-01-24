@@ -5,11 +5,31 @@ class MyTabbarViewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: TabBarView(
-        children: [
+    return DefaultTabController(
 
-      ],),
+      length: 3,
+      child: Scaffold(appBar: AppBar(
+        title:  Text("TABBAR"),
+        bottom:TabBar(tabs:<Widget>[
+    Tab(
+    text: "INFO",
+    ),
+    Tab(
+    text: "Settings",
+    ),
+    Tab(
+    text: "Contacts",
+    )
+        ]),
+      ),
+        body: TabBarView(children: [
+
+          Icon(Icons.info),
+          Icon(Icons.settings),
+          Icon(Icons.contact_emergency),
+        ],
+      ),
+      )
     );
   }
 }
