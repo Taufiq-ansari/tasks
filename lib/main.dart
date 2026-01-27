@@ -1,8 +1,6 @@
-import 'package:api/23_jan/date-time%20picker/date_time%20picker.dart';
-import 'package:api/23_jan/date-time%20picker/time_picker.dart';
-import 'package:api/23_jan/pageview/pageviewscreen.dart';
-import 'package:api/23_jan/tabbarview/tabbarviewpage.dart';
-import 'package:api/6-jan/splashscreen3.dart';
+import 'package:api/23_27jan/clone_app/whatapp.dart';
+import 'package:api/23_27jan/clone_app/whatsapp_comm.dart';
+import 'package:api/23_27jan/clone_app/whatsapp_status.dart';
 import 'package:api/pages/navigation/feed_screen.dart';
 import 'package:api/pages/themechange.dart/themeclass.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +39,7 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case '/':
             return MaterialPageRoute(
-              builder: (context) => TimeScreeen(),
+              builder: (context) => MyWhatsAppComm(),
             );
           case '/feed':
             var arg = settings.arguments as Object; //data pass with ongenerated

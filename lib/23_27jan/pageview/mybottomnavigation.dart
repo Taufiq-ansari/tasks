@@ -23,7 +23,7 @@ class MyBottomNavigation extends StatelessWidget {
       currentIndex: myCurrentIndex,
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          backgroundColor: const Color.fromARGB(255, 221, 214, 193),
+          backgroundColor: const Color.fromARGB(255, 47, 67, 48),
           icon: Icon(Icons.home),
           label: "home",
         ),
