@@ -1,6 +1,7 @@
-import 'package:api/23_30jan/clone_app/whatapp.dart';
+import 'package:api/23_28jan/clone_app/whatapp.dart';
 import 'package:api/pages/navigation/feed_screen.dart';
 import 'package:api/pages/themechange.dart/themeclass.dart';
+import 'package:api/quiz_app/quizlist.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -29,15 +30,15 @@ class MyApp extends StatelessWidget {
       //   fontFamily: "MyFonts",
       // ),
 
-      darkTheme: Themes.darktheme,
+      darkTheme: Themes.lightheme,
 
 // theme mode change directly from here...
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':
             return MaterialPageRoute(
-              builder: (context) => MyWhatsAppNavigate(),
+              builder: (context) => MyQuizAppScreen(),
             );
           case '/feed':
             var arg = settings.arguments as Object; //data pass with ongenerated

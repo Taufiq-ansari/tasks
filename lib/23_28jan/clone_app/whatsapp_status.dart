@@ -1,6 +1,6 @@
-import 'package:api/23_30jan/clone_app/constant_widget/custom_container.dart';
-import 'package:api/23_30jan/clone_app/constant_widget/customlisttile.dart';
-import 'package:api/23_30jan/clone_app/constant_widget/icons.dart';
+import 'package:api/23_28jan/clone_app/constant_widget/custom_container.dart';
+import 'package:api/23_28jan/clone_app/constant_widget/customlisttile.dart';
+import 'package:api/23_28jan/clone_app/constant_widget/icons.dart';
 import 'package:flutter/material.dart';
 
 class MyWhatsAppStatus extends StatefulWidget {
@@ -50,7 +50,7 @@ class _MyWhatsAppStatusState extends State<MyWhatsAppStatus> {
             height: 10.0,
           ),
           // row  for status...
-          Container(
+          MyWhatsappCustomContainer(
             height: 140,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
