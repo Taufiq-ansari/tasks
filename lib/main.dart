@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case '/':
             return MaterialPageRoute(
-              builder: (context) => MyQuizAppScreen(),
+              builder: (context) => MyQuizApp(),
             );
           case '/feed':
             var arg = settings.arguments as Object; //data pass with ongenerated
