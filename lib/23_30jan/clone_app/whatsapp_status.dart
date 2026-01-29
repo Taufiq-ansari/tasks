@@ -1,4 +1,6 @@
-import 'package:api/23_27jan/clone_app/constant_widget/icons.dart';
+import 'package:api/23_30jan/clone_app/constant_widget/custom_container.dart';
+import 'package:api/23_30jan/clone_app/constant_widget/customlisttile.dart';
+import 'package:api/23_30jan/clone_app/constant_widget/icons.dart';
 import 'package:flutter/material.dart';
 
 class MyWhatsAppStatus extends StatefulWidget {
@@ -120,28 +122,40 @@ class _MyWhatsAppStatusState extends State<MyWhatsAppStatus> {
               // physics: NeverScrollableScrollPhysics(),
               itemCount: 10,
               itemBuilder: (context, index) {
-                return Container(
+                return MyWhatsappCustomContainer(
                   height: 60,
-                  child: ListTile(
-                    dense: true,
+                  child: MyCustomListtile(
+                    index: index + 1,
                     onTap: () {},
-                    splashColor: const Color.fromARGB(255, 136, 145, 137)
-                        .withOpacity(0.3),
-                    leading: CircleAvatar(
-                      backgroundColor: const Color.fromARGB(255, 237, 233, 232),
-                      child: Text(
-                        "${index + 1}",
-                        style: TextStyle(
-                          color: const Color.fromARGB(255, 118, 113, 113),
-                        ),
-                      ),
-                    ),
-                    title: Text("Username..."),
-                    subtitle: Text("Typing..."),
+                    title: Text("Channels"),
+                    subtitle: Text("flutter UI/UX"),
                     trailing: Text("3:18 PM"),
                   ),
                 );
               },
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: Column(
+        spacing: 20.0,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            mini: true,
+            backgroundColor: const Color.fromARGB(255, 228, 225, 225),
+            onPressed: () {},
+            child: Icon(
+              Icons.edit,
+              color: const Color.fromARGB(255, 90, 89, 89),
+            ),
+          ),
+          FloatingActionButton(
+            backgroundColor: Colors.green,
+            onPressed: () {},
+            child: Icon(
+              Icons.create_new_folder,
+              color: Colors.white,
             ),
           ),
         ],

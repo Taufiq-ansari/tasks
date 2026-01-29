@@ -1,6 +1,4 @@
-import 'package:api/23_27jan/clone_app/whatapp.dart';
-import 'package:api/23_27jan/clone_app/whatsapp_comm.dart';
-import 'package:api/23_27jan/clone_app/whatsapp_status.dart';
+import 'package:api/23_30jan/clone_app/whatapp.dart';
 import 'package:api/pages/navigation/feed_screen.dart';
 import 'package:api/pages/themechange.dart/themeclass.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +37,7 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case '/':
             return MaterialPageRoute(
-              builder: (context) => MyWhatsAppComm(),
+              builder: (context) => MyWhatsAppNavigate(),
             );
           case '/feed':
             var arg = settings.arguments as Object; //data pass with ongenerated
