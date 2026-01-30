@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Color color = Colors.white;
@@ -16,74 +17,92 @@ class _MyQuizAppState extends State<MyQuizApp> {
   // int correctAnswer = 0;
   // int wrongAnswer = 0;
 
+  bool isAnswer = false;
+
   List<String> selectedAnswer = [];
+  List<int> iconsCount = [];
 
   // list of questions
   List<Map<String, dynamic>> quiz = [
     {
       'question': 'What is Flutter?',
       'answers': [
-        {'text': 'A bird', 'score': 0},
-        {'text': 'A UI framework', 'score': 1},
-        {'text': 'A database', 'score': 0},
+        {'text': 'A bird', 'score': 0, 'isCorrect': false},
+        {'text': 'A UI framework', 'score': 1, 'isCorrect': true},
+        {'text': 'A database', 'score': 0, 'isCorrect': false},
       ],
     },
     {
       'question': 'Which language does Flutter use?',
       'answers': [
-        {'text': 'Java', 'score': 0},
-        {'text': 'Kotlin', 'score': 0},
-        {'text': 'Dart', 'score': 1},
+        {'text': 'Java', 'score': 0, 'isCorrect': false},
+        {'text': 'Kotlin', 'score': 0, 'isCorrect': false},
+        {'text': 'Dart', 'score': 1, 'isCorrect': true},
       ],
     },
     {
       'question': 'Who develops Flutter?',
       'answers': [
-        {'text': 'Apple', 'score': 0},
-        {'text': 'Google', 'score': 1},
-        {'text': 'Microsoft', 'score': 0},
+        {'text': 'Apple', 'score': 0, 'isCorrect': false},
+        {'text': 'Google', 'score': 1, 'isCorrect': true},
+        {'text': 'Microsoft', 'score': 0, 'isCorrect': false},
       ],
     },
     {
       'question': 'What widget is used for immutable ui?',
       'answers': [
-        {'text': 'statefullwidget', 'score': 0},
-        {'text': 'statelesswidget', 'score': 1},
-        {'text': 'inheritwidget', 'score': 0},
+        {'text': 'statefullwidget', 'score': 0, 'isCorrect': false},
+        {'text': 'statelesswidget', 'score': 1, 'isCorrect': true},
+        {'text': 'inheritwidget', 'score': 0, 'isCorrect': false},
       ],
     },
     {
       'question': 'What does setState() do?',
       'answers': [
-        {'text': 'update database', 'score': 0},
-        {'text': 'Rebuild ui', 'score': 1},
-        {'text': 'delete widget', 'score': 0},
+        {'text': 'update database', 'score': 0, 'isCorrect': false},
+        {'text': 'Rebuild ui', 'score': 1, 'isCorrect': true},
+        {'text': 'delete widget', 'score': 0, 'isCorrect': false},
       ],
     },
     {
       'question': 'Which widget is used for scrollable?',
       'answers': [
-        {'text': 'Column', 'score': 0},
-        {'text': 'ListView', 'score': 1},
-        {'text': 'Row', 'score': 0},
+        {'text': 'Column', 'score': 0, 'isCorrect': false},
+        {'text': 'ListView', 'score': 1, 'isCorrect': true},
+        {'text': 'Row', 'score': 0, 'isCorrect': false},
       ],
     },
   ];
 
-// function .....
-
 // answer
   void answerQuestion(int answerscore, String newAnswer) {
     setState(() {
+      if (isAnswer) return;
       selectedAnswer.add(newAnswer);
+      iconsCount.add(answerscore);
       score += answerscore;
-      questionIndex++;
+      isAnswer = true;
+    });
+
+    Future.delayed(Duration(milliseconds: 300), () {
+      if (questionIndex < quiz.length) {
+        setState(() {
+          isAnswer = false;
+          questionIndex++;
+          // isSelectedScore = null;
+        });
+      } else {
+        questionIndex++;
+        setState(() {});
+      }
     });
   }
 
-//reset
+//reset quiz
   reset() {
     selectedAnswer.clear();
+    iconsCount.clear();
+
     questionIndex = 0;
     score = 0;
     setState(() {});
@@ -121,35 +140,92 @@ class _MyQuizAppState extends State<MyQuizApp> {
                           .map((answer) {
                         return ElevatedButton(
                           style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadiusGeometry.circular(8),
+                            ),
                             fixedSize: Size(180, 40),
+                            backgroundColor: Colors.grey,
                           ),
-                          onPressed: () {
-                            answerQuestion(
-                              answer["score"] as int,
-                              answer['text'],
-                            );
-                          },
-                          child: Text(answer['text'] as String),
+                          onPressed: isAnswer
+                              ? null
+                              : () {
+                                  answerQuestion(
+                                    answer["score"] as int,
+                                    answer['text'],
+                                  );
+                                },
+                          child: Text(
+                            answer['text'] as String,
+                            style: TextStyle(color: Colors.white),
+                          ),
                         );
                       }).toList(),
                     ],
                   ),
                 ),
-
-                // container for icons
+                Spacer(),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    spacing: 4,
+                    children: iconsCount.map(
+                      (scores) {
+                        return CircleAvatar(
+                          radius: 10,
+                          backgroundColor:
+                              scores == 1 ? Colors.green : Colors.red,
+                          child: Icon(
+                            scores == 1
+                                ? CupertinoIcons.check_mark
+                                : CupertinoIcons.clear,
+                            color: Colors.white,
+                            size: 12,
+                          ),
+                        );
+                      },
+                    ).toList(),
+                  ),
+                ),
               ],
             )
           : Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // list  for display answer
+                  // list  for display  list of option you choose
                   ...List.generate(selectedAnswer.length, (index) {
-                    return Text(
-                      " ${selectedAnswer[index]}",
-                      style: TextStyle(),
+                    final isCorrect = iconsCount[index] == 1;
+                    return ListTile(
+                      title: Text(
+                        "${index + 1} ${quiz[index]["question"]}",
+                        style: TextStyle(),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "your answer: ${selectedAnswer[index]}",
+                            style: TextStyle(),
+                          ),
+                          Text(
+                            isCorrect ? "✓ correct answer" : "✘ wrong answer",
+                            style: TextStyle(
+                              color: isCorrect ? Colors.green : Colors.red,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      trailing: Icon(
+                        isCorrect
+                            ? CupertinoIcons.check_mark
+                            : CupertinoIcons.clear,
+                        color: isCorrect ? Colors.green : Colors.red,
+                        fontWeight: FontWeight.bold,
+                      ),
                     );
                   }),
+                  // this text field for total scored
                   Text(
                     'Your score: $score / ${quiz.length}',
                     style: const TextStyle(fontSize: 24),
