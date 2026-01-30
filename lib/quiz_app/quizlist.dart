@@ -27,49 +27,52 @@ class _MyQuizAppState extends State<MyQuizApp> {
     {
       'question': 'What is Flutter?',
       'answers': [
-        {'text': 'A bird', 'score': 0, 'isCorrect': false},
-        {'text': 'A UI framework', 'score': 1, 'isCorrect': true},
-        {'text': 'A database', 'score': 0, 'isCorrect': false},
+        {'text': 'A bird', 'score': 0},
+        {'text': 'A UI framework', 'score': 1},
+        {'text': 'A database', 'score': 0},
       ],
     },
     {
       'question': 'Which language does Flutter use?',
       'answers': [
-        {'text': 'Java', 'score': 0, 'isCorrect': false},
-        {'text': 'Kotlin', 'score': 0, 'isCorrect': false},
-        {'text': 'Dart', 'score': 1, 'isCorrect': true},
+        {'text': 'Java', 'score': 0},
+        {'text': 'Kotlin', 'score': 0},
+        {'text': 'Dart', 'score': 1},
       ],
     },
     {
       'question': 'Who develops Flutter?',
       'answers': [
-        {'text': 'Apple', 'score': 0, 'isCorrect': false},
-        {'text': 'Google', 'score': 1, 'isCorrect': true},
-        {'text': 'Microsoft', 'score': 0, 'isCorrect': false},
+        {'text': 'Apple', 'score': 0},
+        {'text': 'Google', 'score': 1},
+        {'text': 'Microsoft', 'score': 0},
       ],
     },
     {
       'question': 'What widget is used for immutable ui?',
       'answers': [
-        {'text': 'statefullwidget', 'score': 0, 'isCorrect': false},
-        {'text': 'statelesswidget', 'score': 1, 'isCorrect': true},
-        {'text': 'inheritwidget', 'score': 0, 'isCorrect': false},
+        {'text': 'statefullwidget', 'score': 0},
+        {'text': 'statelesswidget', 'score': 1},
+        {'text': 'inheritwidget', 'score': 0},
       ],
     },
     {
       'question': 'What does setState() do?',
       'answers': [
-        {'text': 'update database', 'score': 0, 'isCorrect': false},
-        {'text': 'Rebuild ui', 'score': 1, 'isCorrect': true},
-        {'text': 'delete widget', 'score': 0, 'isCorrect': false},
+        {'text': 'update database', 'score': 0},
+        {'text': 'Rebuild ui', 'score': 1},
+        {
+          'text': 'delete widget',
+          'score': 0,
+        },
       ],
     },
     {
       'question': 'Which widget is used for scrollable?',
       'answers': [
-        {'text': 'Column', 'score': 0, 'isCorrect': false},
-        {'text': 'ListView', 'score': 1, 'isCorrect': true},
-        {'text': 'Row', 'score': 0, 'isCorrect': false},
+        {'text': 'Column', 'score': 0},
+        {'text': 'ListView', 'score': 1},
+        {'text': 'Row', 'score': 0},
       ],
     },
   ];
@@ -233,7 +236,7 @@ class _MyQuizAppState extends State<MyQuizApp> {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: reset,
-                    child: const Text('Restart Quiz'),
+                    child: const Text('Rest Quiz'),
                   ),
                 ],
               ),
