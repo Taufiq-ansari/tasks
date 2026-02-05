@@ -1,7 +1,7 @@
-import 'package:api/23_28jan/clone_app/whatapp.dart';
 import 'package:api/pages/navigation/feed_screen.dart';
 import 'package:api/pages/themechange.dart/themeclass.dart';
 import 'package:api/quiz_app/quizlist.dart';
+import 'package:api/users_apis/api.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case '/':
             return MaterialPageRoute(
-              builder: (context) => MyQuizApp(),
+              builder: (context) => usersScreen(),
             );
           case '/feed':
             var arg = settings.arguments as Object; //data pass with ongenerated
