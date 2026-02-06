@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class usersScreen extends StatefulWidget {
   const usersScreen({super.key});
@@ -20,7 +21,7 @@ class _usersScreenState extends State<usersScreen> {
     fetchData();
   }
 
-  //  send  data  to the  internet
+  // send data  to the  internet
 
   postData() {}
 
@@ -31,14 +32,15 @@ class _usersScreenState extends State<usersScreen> {
     });
 
     await Future.delayed(Duration(seconds: 2));
-    final String url = "https://dummyjson.com/users#";
+    final String url =
+        "https://api.indiatvshowz.com/v1/getVideos.php?type=song&start-index=1&max-results=20&language_id=1";
     final Uri uri = Uri.parse(url);
     final response = await http.get(
       uri,
     );
     if (response.statusCode == 200) {
       final decodedData = jsonDecode(response.body);
-      user = decodedData["users"];
+      user = decodedData["data"];
       print("${response.statusCode}");
       print(user);
     } else {
@@ -70,39 +72,81 @@ class _usersScreenState extends State<usersScreen> {
       //   ],
       // ),
       navigationBar: CupertinoNavigationBar(
-        leading: Text("Users Api"),
+        leading: Text("Movies Api"),
 
         // trailing: ,
       ),
       child: isloading
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(
-              physics: BouncingScrollPhysics(),
+              // physics: NeverScrollableScrollPhysics(),
               itemCount: user.length,
               itemBuilder: (context, index) {
-                return Card(
-                  // color: Colors.white70,
-                  child: CupertinoListTile(
-                    leading: Image.network("${user[index]["image"]}"),
-                    title: Text(
-                      "${user[index]["firstName"]} ${user[index]["lastName"]}",
-                      style: TextStyle(
-                        fontFamily: "tangerine",
-                        fontSize: 20,
+                final DateTime duration =
+                    DateTime(int.parse(user[index]["duration"].toString()));
+                final dateFormat = DateFormat("HH:mm:ss");
+                final formatter = dateFormat.format(duration);
+                return Stack(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 8.0),
+                      height: MediaQuery.of(context).size.height / 3,
+                      // width: MediaQuery.of(context).size.width / 0,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        // borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: Image.network(
+                        user[index]["thumb_url"],
+                        fit: BoxFit.fill,
                       ),
                     ),
-                    subtitle: Text(
-                      "${user[index]["email"]}",
-                      style: TextStyle(
-                        // fontFamily: "Myfonts",
-                        fontSize: 12,
+                    Positioned(
+                      bottom: 25,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        //===> title
+                        child: Text(
+                          "title: ${user[index]["video_title"]}",
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.grey,
+                            decoration: TextDecoration.none,
+                          ),
+                        ),
                       ),
                     ),
-                    trailing: Text(
-                      "age:${user[index]["age"]}",
-                      style: TextStyle(fontFamily: "tangerine", fontSize: 20),
+                    Positioned(
+                      bottom: 15,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        //====> Duration
+                        child: Text(
+                          "duration: $formatter",
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.grey,
+                            decoration: TextDecoration.none,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                    Positioned(
+                      bottom: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        //====> view count
+                        child: Text(
+                          "view count: ${NumberFormat('#,##,###').format(int.parse(user[index]['view_count']))}",
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.grey,
+                            decoration: TextDecoration.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 );
               },
             ),
