@@ -16,11 +16,6 @@ class usersScreen extends StatefulWidget {
 class _usersScreenState extends State<usersScreen> {
   List user = [];
   bool isloading = false;
-  int startIndex = 1;
-  int limit = 20;
-
-  ScrollController _controller = ScrollController();
-
   @override
   void initState() {
     super.initState();
@@ -33,36 +28,31 @@ class _usersScreenState extends State<usersScreen> {
     fetchData();
   }
 
+  //  send  data  to the  internet
+
+  postData() {}
+
 //  fetch data fron internet
   fetchData() async {
-    if (isloading) return;
-
     setState(() {
       isloading = true;
     });
 
-    // await Future.delayed(Duration(seconds: 1));
-
-    final String url =
-        "https://api.indiatvshowz.com/v1/getVideos.php?type=song&start-index=$startIndex&max-results=$limit&language_id=1";
+    await Future.delayed(Duration(seconds: 2));
+    final String url = "https://dummyjson.com/users#";
     final Uri uri = Uri.parse(url);
     final response = await http.get(
       uri,
     );
     if (response.statusCode == 200) {
       final decodedData = jsonDecode(response.body);
-      final List users = decodedData["data"];
-
-      if (users.isEmpty) {
-        isloading = true;
-      } else {
-        user.addAll(users);
-        startIndex += limit;
-      }
-
+      user = decodedData["users"];
       print("${response.statusCode}");
       print(user);
+    } else {
+      print(response.statusCode);
     }
+
     // if you wanna find specific users address then use like this given below
     // print(user[3]["address"]["address"]);
     setState(() {
@@ -73,103 +63,57 @@ class _usersScreenState extends State<usersScreen> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
+      // appBar: AppBar(
+      //   title: Text(
+      //     "User Api",
+      //     style: TextStyle(
+      //         // fontFamily: "Myfonts",
+
+      //         ),
+      //   ),
+      //   actions: [
+      //     Icon(
+      //       Icons.more_vert_outlined,
+      //     ),
+      //   ],
+      // ),
       navigationBar: CupertinoNavigationBar(
-        leading: Text("Movies Api"),
+        leading: Text("Users Api"),
 
         // trailing: ,
       ),
-      child: ListView.builder(
-        shrinkWrap: true,
-        controller: _controller,
-        physics: BouncingScrollPhysics(),
-        itemCount: user.length + (isloading ? 1 : 0),
-        itemBuilder: (context, index) {
-          if (index == user.length) {
-            return Padding(
-              padding: EdgeInsets.all(16),
-              child: Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.grey,
-                  color: Colors.blue,
-                ),
-              ),
-            );
-          }
-          final jsonsecond =
-              int.parse(user[index]["duration"]).toString().padLeft(2, '');
-          final Duration duration = Duration(seconds: int.parse(jsonsecond));
-          // final  formatter = DateFormat('HH:mm:ss').format(duration);
-
-          final String formatter =
-              "${duration.inHours.toString().padLeft(2, '0')}:"
-              "${(duration.inMinutes % 60).toString().padLeft(2, '0')}:"
-              "${(duration.inSeconds % 60).toString().padLeft(2, '0')}";
-          // print(formatter);
-
-          return Stack(
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 8.0),
-                height: MediaQuery.of(context).size.height / 3,
-                // width: MediaQuery.of(context).size.width / 0,
-                decoration: BoxDecoration(
-                    // color: Colors.blue,
-                    // borderRadius: BorderRadius.circular(14),
+      child: isloading
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              physics: BouncingScrollPhysics(),
+              itemCount: user.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  // color: Colors.white70,
+                  child: CupertinoListTile(
+                    leading: Image.network("${user[index]["image"]}"),
+                    title: Text(
+                      "${user[index]["firstName"]} ${user[index]["lastName"]}",
+                      style: TextStyle(
+                        fontFamily: "tangerine",
+                        fontSize: 20,
+                      ),
                     ),
-                child: Image.network(
-                  user[index]["thumb_url"],
-                  fit: BoxFit.fill,
-                  // color: color,
-                ),
-              ),
-
-              //==> for title, duration,view details.....
-              Positioned(
-                bottom: 0,
-                child: Container(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width,
-                  color: Colors.white.withOpacity(0.1),
-                  child: Column(
-                    // mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        maxLines: 1,
-                        "Title: ${user[index]["video_title"]}",
-                        style: TextStyle(
-                          // fontFamily: "tangerine",
-
-                          fontSize: 10,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.none,
-                        ),
+                    subtitle: Text(
+                      "${user[index]["email"]}",
+                      style: TextStyle(
+                        // fontFamily: "Myfonts",
+                        fontSize: 12,
                       ),
-                      Text(
-                        "Duration: $formatter",
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.white,
-                          decoration: TextDecoration.none,
-                        ),
-                      ),
-                      Text(
-                        "View: ${NumberFormat('#,##,###').format(int.parse(user[index]['view_count']))}",
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.white,
-                          decoration: TextDecoration.none,
-                        ),
-                      ),
-                    ],
+                    ),
+                    trailing: Text(
+                      "age:${user[index]["age"]}",
+                      style: TextStyle(fontFamily: "tangerine", fontSize: 20),
+                    ),
                   ),
-                ),
-              ),
-            ],
-          );
-        },
-      ),
+                );
+              },
+            ),
     );
   }
 }
