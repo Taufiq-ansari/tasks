@@ -1,13 +1,27 @@
 import 'package:api/pages/navigation/feed_screen.dart';
 import 'package:api/pages/themechange.dart/themeclass.dart';
-import 'package:api/quiz_app/quizlist.dart';
-import 'package:api/users_apis/api.dart';
+import 'package:api/state_management/provider/p_model/couter_model.dart';
+
+import 'package:api/state_management/provider/p_model/list_of_data.dart';
+import 'package:api/state_management/provider/p_screen/counter.dart';
+import 'package:api/state_management/provider/p_screen/list_map.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   // WidgetsFlutterBinding.ensureInitialized();
   // SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
-  runApp(MyApp());
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ListOfMapProvider()),
+        ChangeNotifierProvider(create: (_) => CounterProvider()),
+      ],
+      // create: (_) => CounterProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -38,7 +52,7 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case '/':
             return MaterialPageRoute(
-              builder: (context) => usersScreen(),
+              builder: (context) => ListOfData(),
             );
           case '/feed':
             var arg = settings.arguments as Object; //data pass with ongenerated

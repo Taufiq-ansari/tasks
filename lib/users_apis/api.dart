@@ -25,7 +25,8 @@ class _usersScreenState extends State<usersScreen> {
   void initState() {
     super.initState();
     _controller.addListener(() {
-      if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+      if (_controller.position.pixels >=
+          _controller.position.maxScrollExtent - 200) {
         fetchData();
       }
     });
@@ -34,11 +35,13 @@ class _usersScreenState extends State<usersScreen> {
 
 //  fetch data fron internet
   fetchData() async {
+    if (isloading) return;
+
     setState(() {
-      isloading = false;
+      isloading = true;
     });
 
-    await Future.delayed(Duration(seconds: 1));
+    // await Future.delayed(Duration(seconds: 1));
 
     final String url =
         "https://api.indiatvshowz.com/v1/getVideos.php?type=song&start-index=$startIndex&max-results=$limit&language_id=1";
@@ -55,10 +58,8 @@ class _usersScreenState extends State<usersScreen> {
       } else {
         user.addAll(users);
         startIndex += limit;
-
-        // user = user + users;
-        print("=====> Data length :  ${user.length}");
       }
+
       print("${response.statusCode}");
       print(user);
     }
@@ -77,91 +78,98 @@ class _usersScreenState extends State<usersScreen> {
 
         // trailing: ,
       ),
-      child: isloading
-          ? Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              shrinkWrap: true,
-              controller: _controller,
-              physics: BouncingScrollPhysics(),
-              itemCount: isloading ? user.length + 1 : user.length,
-              itemBuilder: (context, index) {
-                final jsonsecond = int.parse(user[index]["duration"])
-                    .toString()
-                    .padLeft(2, '');
-                final Duration duration =
-                    Duration(seconds: int.parse(jsonsecond));
-                // final  formatter = DateFormat('HH:mm:ss').format(duration);
+      child: ListView.builder(
+        shrinkWrap: true,
+        controller: _controller,
+        physics: BouncingScrollPhysics(),
+        itemCount: user.length + (isloading ? 1 : 0),
+        itemBuilder: (context, index) {
+          if (index == user.length) {
+            return Padding(
+              padding: EdgeInsets.all(16),
+              child: Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.grey,
+                  color: Colors.blue,
+                ),
+              ),
+            );
+          }
+          final jsonsecond =
+              int.parse(user[index]["duration"]).toString().padLeft(2, '');
+          final Duration duration = Duration(seconds: int.parse(jsonsecond));
+          // final  formatter = DateFormat('HH:mm:ss').format(duration);
 
-                final String formatter =
-                    "${duration.inHours.toString().padLeft(2, '0')}:"
-                    "${(duration.inMinutes % 60).toString().padLeft(2, '0')}:"
-                    "${(duration.inSeconds % 60).toString().padLeft(2, '0')}";
-                print(formatter);
+          final String formatter =
+              "${duration.inHours.toString().padLeft(2, '0')}:"
+              "${(duration.inMinutes % 60).toString().padLeft(2, '0')}:"
+              "${(duration.inSeconds % 60).toString().padLeft(2, '0')}";
+          // print(formatter);
 
-                return Stack(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(top: 8.0),
-                      height: MediaQuery.of(context).size.height / 3,
-                      // width: MediaQuery.of(context).size.width / 0,
-                      decoration: BoxDecoration(
-                          // color: Colors.blue,
-                          // borderRadius: BorderRadius.circular(14),
-                          ),
-                      child: Image.network(
-                        user[index]["thumb_url"] ?? "no Image",
-                        fit: BoxFit.fill,
-                        // color: color,
-                      ),
+          return Stack(
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 8.0),
+                height: MediaQuery.of(context).size.height / 3,
+                // width: MediaQuery.of(context).size.width / 0,
+                decoration: BoxDecoration(
+                    // color: Colors.blue,
+                    // borderRadius: BorderRadius.circular(14),
                     ),
+                child: Image.network(
+                  user[index]["thumb_url"],
+                  fit: BoxFit.fill,
+                  // color: color,
+                ),
+              ),
 
-                    //==> for title, duration,view details.....
-                    Positioned(
-                      bottom: 0,
-                      child: Container(
-                        height: 40,
-                        width: MediaQuery.of(context).size.width,
-                        color: Colors.white.withOpacity(0.1),
-                        child: Column(
-                          // mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              maxLines: 1,
-                              "Title: ${user[index]["video_title"]}",
-                              style: TextStyle(
-                                // fontFamily: "tangerine",
+              //==> for title, duration,view details.....
+              Positioned(
+                bottom: 0,
+                child: Container(
+                  height: 40,
+                  width: MediaQuery.of(context).size.width,
+                  color: Colors.white.withOpacity(0.1),
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        maxLines: 1,
+                        "Title: ${user[index]["video_title"]}",
+                        style: TextStyle(
+                          // fontFamily: "tangerine",
 
-                                fontSize: 10,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                decoration: TextDecoration.none,
-                              ),
-                            ),
-                            Text(
-                              "Duration: $formatter",
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: Colors.white,
-                                decoration: TextDecoration.none,
-                              ),
-                            ),
-                            Text(
-                              "View: ${NumberFormat('#,##,###').format(int.parse(user[index]['view_count']))}",
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: Colors.white,
-                                decoration: TextDecoration.none,
-                              ),
-                            ),
-                          ],
+                          fontSize: 10,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.none,
                         ),
                       ),
-                    ),
-                  ],
-                );
-              },
-            ),
+                      Text(
+                        "Duration: $formatter",
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: Colors.white,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                      Text(
+                        "View: ${NumberFormat('#,##,###').format(int.parse(user[index]['view_count']))}",
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: Colors.white,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }
