@@ -16,6 +16,9 @@ class usersScreen extends StatefulWidget {
 class _usersScreenState extends State<usersScreen> {
   List user = [];
   bool isloading = false;
+
+ final ScrollController _controller = ScrollController();
+
   @override
   void initState() {
     super.initState();
