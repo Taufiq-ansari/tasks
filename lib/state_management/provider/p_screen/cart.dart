@@ -1,4 +1,5 @@
-import 'package:api/state_management/provider/p_model/list_of_data.dart';
+import 'package:api/state_management/provider/p_model/cart_model.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,12 +11,12 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     print("==> cart build function called");
     return Scaffold(
-      body: Consumer<ListOfMapProvider>(
+      body: Consumer<ItemsProvider>(
         builder: (ctx, value, child) {
           print("==> cart consumer called");
-          return value.getCartData().isNotEmpty
+          return value.getItems().isNotEmpty
               ? ListView.builder(
-                  itemCount: value.getCartData().length,
+                  itemCount: value.getItems().length,
                   itemBuilder: (context, index) {
                     return Card(
                       margin: EdgeInsets.only(left: 20, right: 20, top: 8),
@@ -27,16 +28,16 @@ class CartScreen extends StatelessWidget {
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
-                        title: Text("${value.getCartData()[index]["item"]}"),
+                        title: Text("${value.getItems()[index]["item"]}"),
                         subtitle: Text(
-                          value.getCartData()[index]["qauntity"].toString(),
+                          value.getItems()[index]["qauntity"].toString(),
                         ),
                         trailing: IconButton(
                           onPressed: () {
-                            Provider.of<ListOfMapProvider>(
+                            Provider.of<ItemsProvider>(
                               context,
                               listen: false,
-                            ).removeToCart(index);
+                            ).removeToItems(index);
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(

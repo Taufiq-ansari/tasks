@@ -1,3 +1,5 @@
+
+import 'package:api/state_management/provider/p_model/cart_model.dart';
 import 'package:api/state_management/provider/p_model/list_of_data.dart';
 import 'package:api/state_management/provider/p_screen/cart.dart';
 
@@ -60,7 +62,9 @@ class ListOfData extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
-                              provider.addToCart(provider.getmData()[index]);
+                              ctx
+                                  .read<ItemsProvider>()
+                                  .addToCart(provider.getmData()[index]);
                             },
                             icon: Text("add"),
                           ),

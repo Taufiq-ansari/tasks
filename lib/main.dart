@@ -1,24 +1,26 @@
+import 'package:api/animation/scale.dart';
+import 'package:api/animation/tweenanimated.dart';
 import 'package:api/pages/navigation/feed_screen.dart';
 import 'package:api/pages/themechange.dart/themeclass.dart';
-import 'package:api/state_management/provider/p_model/couter_model.dart';
-
-import 'package:api/state_management/provider/p_model/list_of_data.dart';
-import 'package:api/state_management/provider/p_screen/counter.dart';
-import 'package:api/state_management/provider/p_screen/list_map.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
   // WidgetsFlutterBinding.ensureInitialized();
   // SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
 
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => ListOfMapProvider()),
-        ChangeNotifierProvider(create: (_) => CounterProvider()),
-      ],
-      // create: (_) => CounterProvider(),
+    // MultiProvider(
+    //   providers: [
+    //     ChangeNotifierProvider(create: (_) => MovieProvider()),
+    //     // ChangeNotifierProvider(create: (_) => ListOfMapProvider()),
+    //     // ChangeNotifierProvider(create: (_)=>ItemsProvider()),                     // provider package used here is example  how to implement  in porject
+    //     // ChangeNotifierProvider(create: (_) => CounterProvider()),
+    //   ],
+    //   // create: (_) => CounterProvider(),
+    //   child: MyApp(),
+    // ),
+    ProviderScope(
       child: MyApp(),
     ),
   );
@@ -52,7 +54,7 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case '/':
             return MaterialPageRoute(
-              builder: (context) => ListOfData(),
+              builder: (context) => CircleScreen(),
             );
           case '/feed':
             var arg = settings.arguments as Object; //data pass with ongenerated
