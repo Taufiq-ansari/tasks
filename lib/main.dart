@@ -1,12 +1,14 @@
-import 'package:api/animation/scale.dart';
-import 'package:api/animation/tweenanimated.dart';
+import 'package:api/firebase/loginscreen.dart';
 import 'package:api/pages/navigation/feed_screen.dart';
 import 'package:api/pages/themechange.dart/themeclass.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   // SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
 
   runApp(
@@ -20,6 +22,7 @@ void main() {
     //   // create: (_) => CounterProvider(),
     //   child: MyApp(),
     // ),
+
     ProviderScope(
       child: MyApp(),
     ),
@@ -54,7 +57,7 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case '/':
             return MaterialPageRoute(
-              builder: (context) => CircleScreen(),
+              builder: (context) => LoginScreen(),
             );
           case '/feed':
             var arg = settings.arguments as Object; //data pass with ongenerated

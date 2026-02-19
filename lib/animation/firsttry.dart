@@ -1,50 +1,8 @@
+
+import 'dart:math' as Math;
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-
-class FirstTryScreen extends StatefulWidget {
-  const FirstTryScreen({super.key});
-
-  @override
-  State<FirstTryScreen> createState() => _FirstTryScreenState();
-}
-
-class _FirstTryScreenState extends State<FirstTryScreen>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 3),
-    )..repeat(reverse: true);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFBDBDBD),
-      body: Center(
-        child: AnimatedBuilder(
-          animation: _controller,
-          builder: (context, child) {
-            return CustomPaint(
-              size: const Size(400, 400),
-              painter: OppositeConcentricPainter(_controller.value),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
 
 class OppositeConcentricPainter extends CustomPainter {
   final double value;
@@ -52,10 +10,11 @@ class OppositeConcentricPainter extends CustomPainter {
   OppositeConcentricPainter(this.value);
 
   @override
-  paint(Canvas canvas, Size size) async {
+  void paint(Canvas canvas, Size size) {
     final center = size.center(Offset.zero);
-    final baseRadius = size.width / 2.3;
+    final baseRadius = size.width / 2.5;
 
+    const double movementEnd = 0.7; // 70% movement, 30% pause
     final colors = [
       const Color(0xFFA5A7AD),
       const Color(0xFF8B8E96),
@@ -68,34 +27,36 @@ class OppositeConcentricPainter extends CustomPainter {
 
     final paint = Paint()..style = PaintingStyle.fill;
 
-    double amplified = 20;
-    double delay = 0.0;
+    // Normalize animation to movement window
+    double t = (value / movementEnd).clamp(0.0, 1.0);
 
-    final centerIndex = colors.length - 1;
-    // final easeOut = Curves.easeInOut.transform(value);
-    final easeIn = Curves.easeIn.transform(value);
+    double delayPerRing = 0.05;
+    double totalWaveDelay = (colors.length - 1) * delayPerRing;
+    double activeWindow = 1.0 - totalWaveDelay;
 
     for (int i = 0; i < colors.length; i++) {
       paint.color = colors[i];
-      int distanceFromCenter = centerIndex;
 
-      double waveValue = value - (distanceFromCenter * delay);
+      // Base radius (static concentric layout)
+      double radius = baseRadius - (baseRadius / colors.length) * i;
 
-      waveValue = waveValue.clamp(0.1, 10.0);
+      // Delay from outer → inner
+      double delay = (colors.length - 1 - i) * delayPerRing;
 
-      double curved = Curves.easeOutCubic.transform(waveValue);
+      double localT = ((t - delay).clamp(0.0, activeWindow)) / activeWindow;
 
-      double radius = baseRadius - (baseRadius / colors.length - 1) * i;
+      // Elastic ripple curve (same as your first widget)
+      double waveValue = Math.pow(Math.sin(localT * Math.pi), 0.8).toDouble();
 
-      if (i == colors.length - 1) {
-        // radius += 30 * easeOut;
-        radius += 1 * easeIn;
-      }
-      // else {
-      radius += amplified * curved;
-      // radius -= amplified * 1;
-      // radius += 30 * easeIn;
-      // }
+      double gap = baseRadius / colors.length;
+
+      // Inner circles move more
+      double innerBoost = (i + 1) * 6.0;
+
+      double expansion = (35.0 + innerBoost) * waveValue;
+
+      radius += expansion;
+
       canvas.drawCircle(center, radius, paint);
     }
   }

@@ -1,5 +1,4 @@
 import 'dart:math' as Math;
-
 import 'package:flutter/material.dart';
 
 class CircleScreen extends StatefulWidget {
@@ -19,8 +18,8 @@ class _CircleScreenState extends State<CircleScreen>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 6),
-    )..repeat();
+      duration: const Duration(milliseconds: 3700),
+    )..repeat(); // Runs once and stops
   }
 
   @override
@@ -32,13 +31,17 @@ class _CircleScreenState extends State<CircleScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFBDBDBD),
+        title: Text("Circle centric animation"),
+      ),
       backgroundColor: const Color(0xFFBDBDBD),
       body: Center(
         child: AnimatedBuilder(
           animation: _controller,
           builder: (context, child) {
             return CustomPaint(
-              size: const Size(400, 300),
+              size: const Size(400, 400),
               painter: OppositeConcentricPainter(_controller.value),
             );
           },
@@ -58,6 +61,7 @@ class OppositeConcentricPainter extends CustomPainter {
     final center = size.center(Offset.zero);
     final baseRadius = size.width / 2.5;
 
+    double movementEnd = 0.7;
     final colors = [
       const Color(0xFFA5A7AD),
       const Color(0xFF8B8E96),
@@ -70,30 +74,34 @@ class OppositeConcentricPainter extends CustomPainter {
 
     final paint = Paint()..style = PaintingStyle.fill;
 
-    double scaleValue;
+    // Normalize animation to movement window
+    double t = (value / movementEnd).clamp(0.0, 1.0);
 
-    if (value < 0.2) {
-      scaleValue = 1;
-
-      // print(scaleValue);
-    } else if (value < 0.45) {
-      final t = (value - 0.2) / 0.25;
-      scaleValue = 30 * Curves.easeOutCubic.transform(t);
-    } else if (value < 0.7) {
-      final t = (value - 0.45) / 0.25;
-      scaleValue = 30 - (45 * t);
-    } else {
-      final t = (value - 0.7) / 0.3;
-      scaleValue = -15 + (15 * Curves.easeInOut.transform(t));
-    }
+    double delayeperRing = 0.03;
+    double totalwave = (colors.length - 1) * delayeperRing;
+    double active = 1.0 - totalwave;
 
     for (int i = 0; i < colors.length; i++) {
       paint.color = colors[i];
 
-      double phase = (value + (i * 0.080)) % 1.0;
-      double wave = 20 * Math.sin(phase * 2 * Math.pi);
+// ===> radius base
       double radius = baseRadius - (baseRadius / colors.length) * i;
-      radius += scaleValue + wave;
+
+// ===> delay for circle  outer and inner
+      double delay = (colors.length - 1 - i) * delayeperRing;
+
+      double result = ((t - delay).clamp(0.0, active)) / active;
+
+// ==> elastic
+      double wave = Math.pow(Math.sin(result * Math.pi), 0.8).toDouble();
+
+      // double gap = baseRadius / colors.length;
+
+      // ===> inner circle move
+      double inner = (i + 1) * 6.0;
+
+      double exp = (35.0 + inner) * wave;
+      radius += exp;
       canvas.drawCircle(center, radius, paint);
     }
   }
