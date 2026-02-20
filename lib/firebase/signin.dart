@@ -1,24 +1,31 @@
+import 'package:api/firebase/firebasescreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-class LoginScreen extends StatefulWidget {
-  LoginScreen({super.key});
+class SignInScreen extends StatefulWidget {
+  SignInScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignInScreenState extends State<SignInScreen> {
+  final image = "https://cdn2.hubspot.net/hubfs/53/image8-2.jpg";
   final email_controller = TextEditingController();
 
   final password_Controller = TextEditingController();
 
   var _formKey = GlobalKey<FormState>();
 
-  userRegistration() async {
+  // final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  userLogin() async {
     try {
       final userCrendential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email_controller.text.trim(),
         password: password_Controller.text.trim(),
       );
@@ -27,16 +34,45 @@ class _LoginScreenState extends State<LoginScreen> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Created Successfully ✅"),
+          content: Text("Logged In Successfully ✅"),
         ),
       );
 
       email_controller.clear();
       password_Controller.clear();
     } on FirebaseAuthException catch (firebase) {
-      print("===> firebase auth Error: $firebase");
+      print("===> Firebase Auth Error: $firebase");
     } catch (e) {
       print("===> Error ${e}");
+    }
+  }
+
+  //google authentication
+  Future<UserCredential?> userGoogle() async {
+    try {
+      // Trigger the authentication flow
+      final GoogleSignIn _googleSignIn = await GoogleSignIn();
+
+      final userLog = await _googleSignIn.signIn();
+
+      if (userLog == null) {
+        return null;
+      }
+      // Obtain the auth details from the request
+      GoogleSignInAuthentication _userAuth = await userLog.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: _userAuth.accessToken,
+        idToken: _userAuth.idToken,
+      );
+      print("===>${credential.idToken}");
+      // Once signed in, return the UserCredential
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } catch (e) {
+      print("==>Google Auth Error ${e}");
+
+      return null;
     }
   }
 
@@ -54,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
             Center(
               child: Text(
-                "Sign Up.",
+                "Sign In.",
                 style: TextStyle(fontSize: 30, fontFamily: "MyFonts"),
               ),
             ),
@@ -64,6 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: TextFormField(
                 controller: email_controller,
                 decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.mail_outline_rounded),
                   hintText: "Email",
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -101,6 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: TextFormField(
                 controller: password_Controller,
                 decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.password_outlined),
                   hintText: "Password",
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -141,9 +179,15 @@ class _LoginScreenState extends State<LoginScreen> {
             GestureDetector(
               onTap: () {
                 if (_formKey.currentState!.validate()) {
-                  print("Successfully Sign-Up");
-                  userRegistration();
+                  userLogin();
+                  print("Successfully Sign-In");
                 }
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FirebaseScreen(),
+                  ),
+                );
               },
               child: Container(
                 margin: EdgeInsets.all(8),
@@ -155,7 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Colors.black,
                 ),
                 child: Text(
-                  "Sign Up",
+                  "Sign In",
                   style: TextStyle(color: Colors.white38, fontSize: 20),
                 ),
               ),
@@ -168,11 +212,47 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text("Already have an account?"),
                   GestureDetector(
                     onTap: () {
-                      print("sign in clicked");
+                      Navigator.pop(context);
+                      print("sign up clicked");
                     },
-                    child: Text("Sign In"),
+                    child: Text(
+                      "Sign Up",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ],
+              ),
+            ),
+            Divider(
+              indent: 20,
+              thickness: 2,
+              endIndent: 20,
+            ),
+            GestureDetector(
+              onTap: () => userGoogle(),
+              child: Container(
+                margin: EdgeInsets.all(8),
+                alignment: Alignment.center,
+                height: 40,
+                width: 380,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(08),
+                  color: Colors.blue,
+                ),
+                child: Row(
+                  spacing: 10,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(image),
+                      radius: 12,
+                    ),
+                    Text(
+                      "Google",
+                      style: TextStyle(color: Colors.white60, fontSize: 20),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

@@ -1,4 +1,4 @@
-import 'package:api/firebase/loginscreen.dart';
+import 'package:api/firebase/signupscreen.dart';
 import 'package:api/pages/navigation/feed_screen.dart';
 import 'package:api/pages/themechange.dart/themeclass.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case '/':
             return MaterialPageRoute(
-              builder: (context) => LoginScreen(),
+              builder: (context) => SignUpScreen(),
             );
           case '/feed':
             var arg = settings.arguments as Object; //data pass with ongenerated
