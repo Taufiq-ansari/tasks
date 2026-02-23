@@ -6,6 +6,9 @@ class FirebaseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("home screen"),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -15,6 +18,15 @@ class FirebaseScreen extends StatelessWidget {
             ],
           ),
         ],
+      ),
+      drawer: Drawer(
+
+        child: 
+        Column(
+          children: [
+            
+          ],
+        ),
       ),
     );
   }

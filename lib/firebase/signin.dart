@@ -1,7 +1,6 @@
 import 'package:api/firebase/firebasescreen.dart';
+import 'package:api/firebase/forgetpassword.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -20,21 +19,31 @@ class _SignInScreenState extends State<SignInScreen> {
 
   var _formKey = GlobalKey<FormState>();
 
-  // final GoogleSignIn _googleSignIn = GoogleSignIn();
-
   userLogin() async {
     try {
-      final userCrendential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
+      final userCrendential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
         email: email_controller.text.trim(),
         password: password_Controller.text.trim(),
+      )
+          .then(
+        (value) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => FirebaseScreen(),
+            ),
+          );
+        },
       );
 
+      setState(() {});
+// print user credential in terminal....
       print(userCrendential);
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Logged In Successfully ✅"),
+          content: Text("Logged In Successfully"),
         ),
       );
 
@@ -170,24 +179,28 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
             ),
 
-            Padding(
-              padding: const EdgeInsets.only(right: 14.0),
-              child: Text("Forget Password"),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ForgetPassword(),
+                  ),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(right: 14.0),
+                child: Text("Forget Password"),
+              ),
             ),
 
             //login Button
             GestureDetector(
               onTap: () {
                 if (_formKey.currentState!.validate()) {
-                  userLogin();
                   print("Successfully Sign-In");
+                  userLogin();
                 }
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => FirebaseScreen(),
-                  ),
-                );
               },
               child: Container(
                 margin: EdgeInsets.all(8),

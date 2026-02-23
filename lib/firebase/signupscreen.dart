@@ -28,7 +28,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Created Successfully ✅"),
+          content: Text("Created Successfully"),
         ),
       );
 
