@@ -1,15 +1,32 @@
-
-import 'package:api/firebase/signupscreen.dart';
+import 'package:api/Onboarding/onboarding1.dart';
+import 'package:api/firebase/Notification/firebase_notification.dart';
 import 'package:api/pages/navigation/feed_screen.dart';
 import 'package:api/pages/themechange.dart/themeclass.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-Future<void> main() async {
+final navigateKey = GlobalKey<NavigatorState>();
+
+@pragma('vm:entry-point')
+//  background notification
+Future<void> handleBackgroundNotification(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print("==> Firebase Title: ${message.notification?.title}");
+  print("==> Firebase Body: ${message.notification?.body}");
+  print("==> Messagge ID: ${message.messageId}");
+}
+
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
+  await FireBaseService().initNotifications();
+
+  FirebaseMessaging.onBackgroundMessage(handleBackgroundNotification);
+
+  await FireBaseService.initialize();
   // SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
 
   runApp(
@@ -36,6 +53,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigateKey,
       debugShowCheckedModeBanner: false,
       //  theme manage from here ....
       theme: Theme.of(context).copyWith(
@@ -58,7 +76,7 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case '/':
             return MaterialPageRoute(
-              builder: (context) => SignUpScreen(),
+              builder: (context) => OnBoardingScreen1(),
             );
           case '/feed':
             var arg = settings.arguments as Object; //data pass with ongenerated

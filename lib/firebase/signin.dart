@@ -1,5 +1,6 @@
 import 'package:api/firebase/firebasescreen.dart';
 import 'package:api/firebase/forgetpassword.dart';
+import 'package:api/pages/todohomepage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -31,7 +32,7 @@ class _SignInScreenState extends State<SignInScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => FirebaseScreen(),
+              builder: (context) => ToDoHomepage(),
             ),
           );
         },
